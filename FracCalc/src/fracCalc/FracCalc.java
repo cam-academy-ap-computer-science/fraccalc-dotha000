@@ -6,13 +6,13 @@ public class FracCalc {
         // TODO: Read the input from the user and call produceAnswer with an equation
     	Scanner console = new Scanner(System.in);
     	boolean again = false;
-    	while(again) {
+    	while(!again) {
     		String expression = console.nextLine();
-    		if (expression.equals("quit")) {
+    		if (expression.equalsIgnoreCase("quit")) {
     			again = true;
     		}
-    		String op2 = produceAnswer(expression);
-    		System.out.println(op2);
+        	String op2 = produceAnswer(expression);
+        	System.out.println(op2);
     	}
     }
     
@@ -26,26 +26,58 @@ public class FracCalc {
     //      e.g. return ==> "1_1/4"
     public static String produceAnswer(String input) { 
         // TODO: Implement this function to produce the solution to the input
-    	/*int op1End = 0;
-    	int slash = 0;
-    	boolean twice = false;
-    	// Calculates when the first space or operator appears (a.k.a where the first operand ends)
-        while ((input.charAt(op1End).equals()input.' ') || (input.charAt(op1End) != '+') || (input.charAt(op1End) != '-') || (input.charAt(op1End) != '*')/* || !twice) {
-        	if (input.charAt(op1End) == '/') {
-        		slash++;
-        	}
-        	if(slash == 2) {
-        		twice = true;
-        	}
-        	op1End++;
-        }*/
+    	//Separate operand1, operator, and operand2
     	int op1End = input.indexOf(' ');
         String operand1 = input.substring(0,op1End);
         int opStart = op1End + 1;
         String operator = input.substring(opStart, (opStart + 1));
         int op2Start = opStart + 2;
         String operand2 = input.substring(op2Start, input.length());
-        return operand2;
+        //Parsing operand1
+        int line1 = operand1.indexOf('_');
+        int slash1 = operand1.indexOf('/');
+        int whole1 = 0;
+        int num1 = 0;
+        int den1 = 0;
+        //Find whole, num, and den depending on the fraction
+        if (line1 == -1 && slash1 != -1) {
+        	whole1 = 0;
+        	num1 = Integer.parseInt(operand1.substring(0, slash1));
+        	den1 = Integer.parseInt(operand1.substring(slash1 + 1, operand1.length()));
+        } else if (line1 != -1 && slash1 != -1){
+        	whole1 = Integer.parseInt(operand1.substring(0, line1));
+        	num1 = Integer.parseInt(operand1.substring(line1 + 1, slash1));
+        	den1 = Integer.parseInt(operand1.substring(slash1 + 1, operand1.length()));
+        } else {
+        	whole1 = Integer.parseInt(operand1.substring(0,operand1.length()));
+        	num1 = 0;
+        	den1 = 1;
+        }
+        //parsing operand2
+        int line2 = operand2.indexOf('_');
+        int slash2 = operand2.indexOf('/');
+        int whole2 = 0;
+        int num2 = 0;
+        int den2 = 0;
+        //Find whole, num, and den depending on the fraction
+        if (line2 == -1 && slash2 != -1) {
+        	whole2 = 0;
+        	num2 = Integer.parseInt(operand2.substring(0, slash2));
+        	den2 = Integer.parseInt(operand2.substring(slash2 + 1, operand2.length()));
+        } else if (line2 != -1 && slash2 != -1){
+        	whole2 = Integer.parseInt(operand2.substring(0, line2));
+        	num2 = Integer.parseInt(operand2.substring(line2 + 1, slash2));
+        	den2 = Integer.parseInt(operand2.substring(slash2 + 1, operand2.length()));
+        } else {
+        	whole2 = Integer.parseInt(operand2.substring(0,operand2.length()));
+        	num2 = 0;
+        	den2 = 1;
+        }
+        //create return string
+        String parse2 = "whole:" + whole2 + " numerator:" + num2 + " denominator:" + den2;
+        return parse2;
+
+        
     }
 
     // TODO: Fill in the space below with any helper methods that you think you will need
