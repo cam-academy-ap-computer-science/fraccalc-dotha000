@@ -73,9 +73,26 @@ public class FracCalc {
         	num2 = 0;
         	den2 = 1;
         }
+        //Figuring out the operator
+        int realNum = 0;
+        int realWhole = 0;
+    	int realDen = den1 * den2;
+    	num1 = num1 + whole1 * den1;
+    	num2 = num2 + whole2 * den2;
+    	//Calculate depending on operator
+        if (operator.equals("+")) {
+        	realNum = num1 * den2 + num2 * den1;
+        } else if(operator.equals("-")) {
+        	realNum = num1 - num2;
+        } else if(operator.contentEquals("*")) {
+        	realNum = num1 * num2;
+        } else {
+        	realNum = den2 * num1;
+        	realDen = num2 * den1;
+        }
         //create return string
-        String parse2 = "whole:" + whole2 + " numerator:" + num2 + " denominator:" + den2;
-        return parse2;
+        String ans = realNum + "/" + realDen;
+        return ans;
 
         
     }
