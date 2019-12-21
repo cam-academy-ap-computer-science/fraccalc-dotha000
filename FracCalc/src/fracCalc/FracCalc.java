@@ -10,8 +10,8 @@ public class FracCalc {
     		if (expression.equalsIgnoreCase("quit")) {
     			again = false;
     		} else {
-    			String op2 = produceAnswer(expression);
-    			System.out.println(op2);
+    			String ans = produceAnswer(expression);
+    			System.out.println(ans);
     		}
     	}
     }
@@ -119,17 +119,15 @@ public class FracCalc {
         	}
         }
         //create return string
-        String ans = "";
         if (realWhole != 0 && realNum != 0) {
-        	ans = realWhole + "_" + realNum + "/" + realDen;
+        	return realWhole + "_" + realNum + "/" + realDen;
         }else if (realWhole == 0 && realNum == 0){
-        	ans = "0";
+        	return "0";
         }else if (realWhole != 0 && realNum == 0){
-        	ans = String.valueOf(realWhole);
+        	return String.valueOf(realWhole);
         }else {
-        	ans = realNum + "/" + realDen;
+        	return realNum + "/" + realDen;
         }
-        return ans;
     }
     // TODO: Fill in the space below with any helper methods that you think you will need
 }
