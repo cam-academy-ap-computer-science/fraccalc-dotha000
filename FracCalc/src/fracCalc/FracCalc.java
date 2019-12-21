@@ -1,21 +1,20 @@
 package fracCalc;
 import java.util.*;
 public class FracCalc {
-
     public static void main(String[] args) {
         // TODO: Read the input from the user and call produceAnswer with an equation
     	Scanner console = new Scanner(System.in);
-    	boolean again = false;
-    	while(!again) {
+    	boolean again = true;
+    	while(again) {
     		String expression = console.nextLine();
     		if (expression.equalsIgnoreCase("quit")) {
-    			again = true;
+    			again = false;
+    		} else {
+    			String op2 = produceAnswer(expression);
+    			System.out.println(op2);
     		}
-        	String op2 = produceAnswer(expression);
-        	System.out.println(op2);
     	}
     }
-    
     // ** IMPORTANT ** DO NOT DELETE THIS FUNCTION.  This function will be used to test your code
     // This function takes a String 'input' and produces the result
     //
@@ -73,30 +72,64 @@ public class FracCalc {
         	num2 = 0;
         	den2 = 1;
         }
+        //Sends error if divided by zero
+        if (den1 == 0 || den2 == 0 || (num2 == 0 && operator.contentEquals("/") && whole2 == 0)) {
+        	return "ERROR: Cannot divide by zero.";
+        }
         //Figuring out the operator
         int realNum = 0;
-        int realWhole = 0;
     	int realDen = den1 * den2;
-    	num1 = num1 + whole1 * den1;
-    	num2 = num2 + whole2 * den2;
+    	//Changing to improper fraction
+    	num1 = num1 + Math.abs(whole1 * den1);
+    	if (whole1 < 0) {
+    		num1 *= -1;
+    	}
+    	num2 = num2 + Math.abs(whole2 * den2);
+    	if (whole2 < 0) {
+    		num2 *= -1;
+    	}
     	//Calculate depending on operator
         if (operator.equals("+")) {
         	realNum = num1 * den2 + num2 * den1;
         } else if(operator.equals("-")) {
-        	realNum = num1 - num2;
+        	realNum = num1 * den2 - num2 * den1;
         } else if(operator.contentEquals("*")) {
         	realNum = num1 * num2;
         } else {
         	realNum = den2 * num1;
         	realDen = num2 * den1;
         }
+        //If the denominator is negative, multiple numerator by -1
+        if (realDen < 0) {
+        	realNum *= -1;
+        	realDen *= -1;
+        }
+        int realWhole = realNum / realDen;
+        if (realWhole != 0 && realNum > 0) {
+        	realNum = realNum % realDen;
+        } else if (realWhole != 0 && realNum < 0) {
+        	realNum = realNum % realDen * -1;
+        }
+        //reduce
+        for (int i = realDen - 1; i >= 2; i--) {
+        if (realNum % i == 0 && realDen % i == 0) {
+        		realNum /= i;
+        		realDen /= i;
+        		i = 1;
+        	}
+        }
         //create return string
-        String ans = realNum + "/" + realDen;
+        String ans = "";
+        if (realWhole != 0 && realNum != 0) {
+        	ans = realWhole + "_" + realNum + "/" + realDen;
+        }else if (realWhole == 0 && realNum == 0){
+        	ans = "0";
+        }else if (realWhole != 0 && realNum == 0){
+        	ans = String.valueOf(realWhole);
+        }else {
+        	ans = realNum + "/" + realDen;
+        }
         return ans;
-
-        
     }
-
     // TODO: Fill in the space below with any helper methods that you think you will need
-    
 }
