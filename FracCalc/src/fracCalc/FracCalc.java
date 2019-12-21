@@ -5,6 +5,7 @@ public class FracCalc {
         // TODO: Read the input from the user and call produceAnswer with an equation
     	Scanner console = new Scanner(System.in);
     	boolean again = true;
+    	//Loops until user enters quit
     	while(again) {
     		String expression = console.nextLine();
     		if (expression.equalsIgnoreCase("quit")) {
