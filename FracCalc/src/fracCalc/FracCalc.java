@@ -7,6 +7,7 @@ public class FracCalc {
     	boolean again = true;
     	//Loops until user enters quit
     	while(again) {
+    		System.out.println("Enter a 2 operand fractional equation.\nType \"quit\" to stop.");
     		String expression = console.nextLine();
     		if (expression.equalsIgnoreCase("quit")) {
     			again = false;
